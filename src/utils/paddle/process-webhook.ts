@@ -5,22 +5,21 @@ import {
   EventName,
   SubscriptionCreatedEvent,
   SubscriptionUpdatedEvent,
-  
 } from '@paddle/paddle-node-sdk';
 import { createClient } from '@/utils/supabase/server-internal';
 
 export class ProcessWebhook {
   async processEvent(eventData: EventEntity) {
+    console.log("EventName",EventName)
     switch (eventData.eventType) {
-      case EventName.transaction.updated:
-      case EventName.transaction.created:
+      case EventName.SubscriptionCreated:
+      case EventName.SubscriptionUpdated:
         await this.updateSubscriptionData(eventData);
         break;
-      case EventName.address.created:
+      case EventName.CustomerCreated:
       case EventName.CustomerUpdated:
         await this.updateCustomerData(eventData);
         break;
-      
     }
   }
 
