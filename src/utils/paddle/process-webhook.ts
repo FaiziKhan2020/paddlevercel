@@ -10,22 +10,17 @@ import { createClient } from '@/utils/supabase/server-internal';
 
 export class ProcessWebhook {
   async processEvent(eventData: EventEntity) {
-    console.log('EventName', EventName);
     switch (eventData.eventType) {
       case EventName.SubscriptionCreated:
-        console.log('hello');
         await this.updateSubscriptionData(eventData);
         break;
       case EventName.SubscriptionUpdated:
-        console.log('hello');
         await this.updateSubscriptionData(eventData);
         break;
       case EventName.CustomerCreated:
-        console.log('hello 2');
         await this.updateCustomerData(eventData);
         break;
       case EventName.CustomerUpdated:
-        console.log('hello 2');
         await this.updateCustomerData(eventData);
         break;
     }
@@ -33,8 +28,7 @@ export class ProcessWebhook {
 
   async updateSubscriptionData(eventData: SubscriptionCreatedEvent | SubscriptionUpdatedEvent) {
     try {
-      console.log('this is subscription eventData', eventData);
-
+      console.log('helo from customer', eventData.data.customData);
       const response = await createClient()
         .from('subscriptions')
         .upsert({
@@ -46,7 +40,13 @@ export class ProcessWebhook {
           customer_id: eventData.data.customerId,
         })
         .select();
-      console.log(response);
+      // await createClient()
+      //   .from('customers')
+      //   .upsert({
+      //     customer_id: eventData.data.id,
+      //     email: eventData.data.customData,
+      //   })
+      //   .select();
     } catch (e) {
       console.error(e);
     }
