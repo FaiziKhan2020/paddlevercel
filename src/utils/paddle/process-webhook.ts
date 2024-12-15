@@ -10,7 +10,7 @@ import { createClient } from '@/utils/supabase/server-internal';
 
 export class ProcessWebhook {
   async processEvent(eventData: EventEntity) {
-    console.log("EventName",eventData.eventType)
+    console.log("EventName",EventName)
     switch (eventData.eventType) {
       case EventName.SubscriptionCreated:
         console.log("hello")
