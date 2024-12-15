@@ -8,9 +8,6 @@ export async function POST(request: NextRequest) {
   const signature = request.headers.get('paddle-signature') || '';
   const rawRequestBody = await request.text();
   const privateKey = process.env['PADDLE_NOTIFICATION_WEBHOOK_SECRET'] || '';
-
-  console.log('this is privatekey', privateKey);
-
   let status, eventName;
   try {
     if (signature && rawRequestBody) {
@@ -19,7 +16,6 @@ export async function POST(request: NextRequest) {
       status = 200;
       eventName = eventData?.eventType ?? 'Unknown event';
       if (eventData) {
-        console.log('this is eventName', eventName);
         await webhookProcessor.processEvent(eventData);
       }
     } else {

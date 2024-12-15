@@ -8,6 +8,7 @@ import { getErrorMessage } from '@/utils/paddle/data-helpers';
 export async function getSubscriptions(): Promise<SubscriptionResponse> {
   try {
     const customerId = await getCustomerId();
+
     if (customerId) {
       const subscriptionCollection = getPaddleInstance().subscriptions.list({ customerId: [customerId], perPage: 20 });
       const subscriptions = await subscriptionCollection.next();
